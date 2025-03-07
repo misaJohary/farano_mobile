@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "283699108817",
+    "project_id": "farano-20ae7",
+    "storage_bucket": "farano-20ae7.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:283699108817:android:01347c881e4fff9dd3def0",
+        "android_client_info": {
+          "package_name": "com.farano.boyer.farano"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCxamHysx3cIe_idJRLnrHYNfABFjOzuic"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
