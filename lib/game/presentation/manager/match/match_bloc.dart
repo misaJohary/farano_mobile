@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:farano/game/domain/entities/game_config_entity.dart';
 import 'package:farano/game/domain/entities/game_entity.dart';
 import 'package:farano/game/domain/entities/match_entity.dart';
-import 'package:farano/game/domain/repositories/game_repository.dart';
+import 'package:farano/game/domain/repositories/match_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../data/models/match_model.dart';
@@ -20,17 +20,17 @@ enum Status {
 }
 
 class MatchBloc extends Bloc<MatchEvent, MatchState> {
-  final GameRepository repo;
+  final MatchRepository repo;
 
   MatchBloc(this.repo) : super(const MatchState()) {
-    on<GameCreated>(_onGameCreated);
-    on<GameJoined>(_onGameJoined);
-    on<GameMatchUpdated>(_onGameMatchUpdated);
+    on<MatchCreated>(_onMatchCreated);
+    on<MatchJoined>(_onMatchJoined);
+    on<MatchUpdated>(_onMatchUpdated);
   }
 
-  _onGameCreated(event, emit) async {
+  _onMatchCreated(event, emit) async {
     emit(state.copyWith(status: Status.loading));
-    final result = await repo.createGame(
+    final result = await repo.createMatch(
       PlayerEntity.first(),
       GameConfigEntity.byDefault(),
     );
@@ -50,9 +50,9 @@ class MatchBloc extends Bloc<MatchEvent, MatchState> {
     }
   }
 
-  _onGameJoined(event, emit) async {
+  _onMatchJoined(event, emit) async {
     emit(state.copyWith(status: Status.loading));
-    final result = await repo.joinGame(PlayerEntity.second(), event.code);
+    final result = await repo.joinMatch(PlayerEntity.second(), event.code);
     if (result.isSuccess) {
       emit(
         state.copyWith(
@@ -69,7 +69,7 @@ class MatchBloc extends Bloc<MatchEvent, MatchState> {
     }
   }
 
-  _onGameMatchUpdated(event, emit) {
+  _onMatchUpdated(event, emit) {
     final id = state.match?.id;
     event.match['id'] = id;
     emit(state.copyWith(match: MatchModel.fromJson(event.match)));

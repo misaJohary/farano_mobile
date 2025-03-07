@@ -8,18 +8,18 @@ import '../../../core/utils/multi_result.dart';
 import '../../domain/entities/game_config_entity.dart';
 import '../../domain/entities/match_entity.dart';
 import '../../domain/entities/player_entity.dart';
-import '../../domain/repositories/game_repository.dart';
+import '../../domain/repositories/match_repository.dart';
 import '../models/match_model.dart';
 
 
-@LazySingleton(as: GameRepository)
-class GameRepositoryImpl implements GameRepository {
+@LazySingleton(as: MatchRepository)
+class MatchRepositoryImpl implements MatchRepository {
   final GameService _gameService;
 
-  GameRepositoryImpl(this._gameService);
+  MatchRepositoryImpl(this._gameService);
 
   @override
-  Future<MultipleResult<Failure, MatchEntity>> createGame(
+  Future<MultipleResult<Failure, MatchEntity>> createMatch(
     PlayerEntity player,
     GameConfigEntity config,
   ) async {
@@ -40,7 +40,7 @@ class GameRepositoryImpl implements GameRepository {
   }
 
   @override
-  Future<MultipleResult<Failure, GameEntity>> joinGame(
+  Future<MultipleResult<Failure, GameEntity>> joinMatch(
     PlayerEntity player,
     String code,
   ) async {

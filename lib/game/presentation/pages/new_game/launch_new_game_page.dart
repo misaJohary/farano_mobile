@@ -44,7 +44,7 @@ class _LaunchNewGamePageState extends State<LaunchNewGamePage> {
 
       final matchData = snapshot.data() as Map<String, dynamic>?;
       if (matchData != null) {
-        context.read<MatchBloc>().add(GameMatchUpdated(matchData));
+        context.read<MatchBloc>().add(MatchUpdated(matchData));
       }
     }, onError: (error) {
       //context.read<GameBloc>().add(const GameError('Failed to listen to match updates'));

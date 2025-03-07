@@ -6,8 +6,14 @@ import 'package:farano/game/domain/entities/player_entity.dart';
 import '../../../core/utils/failure.dart';
 import '../entities/game_entity.dart';
 
-abstract class GameRepository {
-  Future<MultipleResult<Failure, GameEntity>> joinGame(
-    String gameId
+abstract class MatchRepository {
+  Future<MultipleResult<Failure, MatchEntity>> createMatch(
+    PlayerEntity player,
+    GameConfigEntity config,
+  );
+
+  Future<MultipleResult<Failure, GameEntity>> joinMatch(
+    PlayerEntity player,
+    String code,
   );
 }

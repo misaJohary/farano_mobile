@@ -164,6 +164,7 @@ class GameService {
       'startedAt': FieldValue.serverTimestamp(),
       'endedAt': null,
       'currentWord': '',
+      'players': players,
       'currentPlayerId': players[startingPlayerIndex]['userId'],
       'turnStartedAt': FieldValue.serverTimestamp(),
       'turns': [],
@@ -361,6 +362,22 @@ class GameService {
     } catch (e) {
       print('Error starting rematch: $e');
       return false;
+    }
+  }
+
+  // Add this method to your GameService class
+  Future<Map<String, dynamic>?> getGameById(String gameId) async {
+    try {
+      final gameDoc = await _gamesRef.doc(gameId).get();
+
+      if (!gameDoc.exists) {
+        return null;
+      }
+
+      return gameDoc.data() as Map<String, dynamic>;
+    } catch (e) {
+      print('Error getting game by ID: $e');
+      throw Exception('Failed to fetch game data');
     }
   }
 

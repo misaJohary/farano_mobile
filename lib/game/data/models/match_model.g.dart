@@ -30,8 +30,6 @@ const _$MatchStatusEnumMap = {
   MatchStatus.waiting: 'waiting',
   MatchStatus.player2Entered: 'player2Entered',
   MatchStatus.gameCreated: 'gameCreated',
-  MatchStatus.playing: 'playing',
-  MatchStatus.paused: 'paused',
   MatchStatus.completed: 'completed',
   MatchStatus.abandoned: 'abandoned',
 };

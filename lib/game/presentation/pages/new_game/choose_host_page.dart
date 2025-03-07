@@ -56,7 +56,7 @@ class ChooseHostPage extends StatelessWidget {
                 height: 50,
                 child: ElevatedButton(
                   onPressed: () async {
-                    context.read<MatchBloc>().add(const GameCreated());
+                    context.read<MatchBloc>().add(const MatchCreated());
                     Navigator.push(
                       context,
                       MaterialPageRoute(

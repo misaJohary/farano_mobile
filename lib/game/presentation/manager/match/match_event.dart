@@ -4,15 +4,15 @@ abstract class MatchEvent extends Equatable {
   const MatchEvent();
 }
 
-class GameCreated extends MatchEvent {
-  const GameCreated();
+class MatchCreated extends MatchEvent {
+  const MatchCreated();
 
   @override
   List<Object?> get props => [];
 }
 
-class GameJoined extends MatchEvent{
-  const GameJoined(this.code);
+class MatchJoined extends MatchEvent{
+  const MatchJoined(this.code);
 
   final String code;
 
@@ -20,8 +20,8 @@ class GameJoined extends MatchEvent{
   List<Object?> get props => [code];
 }
 
-class GameMatchUpdated extends MatchEvent{
-  const GameMatchUpdated(this.match);
+class MatchUpdated extends MatchEvent{
+  const MatchUpdated(this.match);
 
   final Map<String, dynamic> match;
 
