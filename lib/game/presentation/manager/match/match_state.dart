@@ -1,23 +1,23 @@
-part of 'game_bloc.dart';
+part of 'match_bloc.dart';
 
-class GameState extends Equatable {
-  const GameState({
-    this.gameStatus = GameStatus.init,
+class MatchState extends Equatable {
+  const MatchState({
+    this.status = Status.init,
     this.match,
     this.currentGame,
   });
 
-  final GameStatus gameStatus;
+  final Status status;
   final MatchEntity? match;
   final GameEntity? currentGame;
 
-  GameState copyWith({
-    GameStatus? gameStatus,
+  MatchState copyWith({
+    Status? status,
     MatchEntity? match,
     GameEntity? currentGame,
   }) {
-    return GameState(
-      gameStatus: gameStatus ?? this.gameStatus,
+    return MatchState(
+      status: status ?? this.status,
       match: match ?? this.match,
       currentGame: currentGame ?? this.currentGame,
     );
@@ -25,7 +25,7 @@ class GameState extends Equatable {
 
   @override
   List<Object?> get props => [
-        gameStatus,
+        status,
         match,
         currentGame,
       ];

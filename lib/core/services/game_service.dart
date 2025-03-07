@@ -25,7 +25,7 @@ class GameService {
     final String matchCode = await _generateUniqueMatchCode();
 
     final matchData = {
-      'matchCode': matchCode,
+      'code': matchCode,
       'isPublic': false,
       'status': 'waiting', // 'waiting', 'player_2_entered', 'game_created', 'active', 'completed', 'abandoned'
       'createdAt': FieldValue.serverTimestamp(),
@@ -131,7 +131,7 @@ class GameService {
 // Update the entire players array to ensure nothing is lost
     await matchDoc.reference.update({
       'players': updatedPlayers,
-      'status': 'player_2_entered',
+      'status': 'player2Entered',
       'updatedAt': FieldValue.serverTimestamp(),
     });
 
@@ -141,7 +141,7 @@ class GameService {
     // Update match with the new game
     await matchDoc.reference.update({
       'currentGameId': gameId,
-      'status': 'game_created',
+      'status': 'gameCreated',
       'gameHistory': FieldValue.arrayUnion([gameId]),
     });
 

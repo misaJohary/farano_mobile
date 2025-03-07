@@ -14,7 +14,7 @@ import 'package:injectable/injectable.dart' as _i526;
 import 'core/services/game_service.dart' as _i853;
 import 'game/data/repositories/game_repository_impl.dart' as _i940;
 import 'game/domain/repositories/game_repository.dart' as _i888;
-import 'game/presentation/manager/game_bloc.dart' as _i545;
+import 'game/presentation/manager/match/match_bloc.dart' as _i545;
 
 extension GetItInjectableX on _i174.GetIt {
 // initializes the registration of main-scope dependencies inside of GetIt
@@ -30,8 +30,8 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i853.GameService>(() => _i853.GameService());
     gh.lazySingleton<_i888.GameRepository>(
         () => _i940.GameRepositoryImpl(gh<_i853.GameService>()));
-    gh.factory<_i545.GameBloc>(
-        () => _i545.GameBloc(gh<_i888.GameRepository>()));
+    gh.factory<_i545.MatchBloc>(
+        () => _i545.MatchBloc(gh<_i888.GameRepository>()));
     return this;
   }
 }

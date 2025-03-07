@@ -5,31 +5,31 @@ import 'package:farano/game/domain/entities/match_entity.dart';
 import 'package:farano/game/domain/repositories/game_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../domain/entities/player_entity.dart';
+import '../../../data/models/match_model.dart';
+import '../../../domain/entities/player_entity.dart';
 
-part 'game_event.dart';
+part 'match_event.dart';
 
-part 'game_state.dart';
+part 'match_state.dart';
 
-enum GameStatus {
+enum Status {
   init,
   loading,
-  waiting,
-  started,
-  canceled,
+  succeed,
   failed,
 }
 
-class GameBloc extends Bloc<GameEvent, GameState> {
+class MatchBloc extends Bloc<MatchEvent, MatchState> {
   final GameRepository repo;
 
-  GameBloc(this.repo) : super(const GameState()) {
+  MatchBloc(this.repo) : super(const MatchState()) {
     on<GameCreated>(_onGameCreated);
     on<GameJoined>(_onGameJoined);
+    on<GameMatchUpdated>(_onGameMatchUpdated);
   }
 
   _onGameCreated(event, emit) async {
-    emit(state.copyWith(gameStatus: GameStatus.loading));
+    emit(state.copyWith(status: Status.loading));
     final result = await repo.createGame(
       PlayerEntity.first(),
       GameConfigEntity.byDefault(),
@@ -37,35 +37,41 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     if (result.isSuccess) {
       emit(
         state.copyWith(
-          gameStatus: GameStatus.waiting,
+          status: Status.succeed,
           match: result.getSuccess,
         ),
       );
     } else {
       emit(
         state.copyWith(
-          gameStatus: GameStatus.failed,
+          status: Status.failed,
         ),
       );
     }
   }
 
   _onGameJoined(event, emit) async {
-    emit(state.copyWith(gameStatus: GameStatus.loading));
+    emit(state.copyWith(status: Status.loading));
     final result = await repo.joinGame(PlayerEntity.second(), event.code);
     if (result.isSuccess) {
       emit(
         state.copyWith(
-          gameStatus: GameStatus.waiting,
+          status: Status.loading,
           currentGame: result.getSuccess,
         ),
       );
     } else {
       emit(
         state.copyWith(
-          gameStatus: GameStatus.failed,
+          status: Status.failed,
         ),
       );
     }
+  }
+
+  _onGameMatchUpdated(event, emit) {
+    final id = state.match?.id;
+    event.match['id'] = id;
+    emit(state.copyWith(match: MatchModel.fromJson(event.match)));
   }
 }

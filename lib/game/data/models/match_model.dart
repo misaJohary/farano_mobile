@@ -9,6 +9,8 @@ class MatchModel extends MatchEntity {
     required super.code,
     super.hostName,
     super.config,
+    super.status,
+    super.currentGameId,
   });
 
   factory MatchModel.fromJson(Map<String, dynamic> json) => _$MatchModelFromJson(json);

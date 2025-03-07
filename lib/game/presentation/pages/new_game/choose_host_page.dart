@@ -1,5 +1,5 @@
 import 'package:farano/core/widgets/text_in_box.dart';
-import 'package:farano/game/presentation/manager/game_bloc.dart';
+import 'package:farano/game/presentation/manager/match/match_bloc.dart';
 import 'package:farano/game/presentation/pages/new_game/launch_new_game_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -56,7 +56,7 @@ class ChooseHostPage extends StatelessWidget {
                 height: 50,
                 child: ElevatedButton(
                   onPressed: () async {
-                    context.read<GameBloc>().add(const GameCreated());
+                    context.read<MatchBloc>().add(const GameCreated());
                     Navigator.push(
                       context,
                       MaterialPageRoute(
