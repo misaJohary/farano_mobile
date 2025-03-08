@@ -16,6 +16,7 @@ GameModel _$GameModelFromJson(Map<String, dynamic> json) => GameModel(
       currentPlayerId: json['currentPlayerId'] as String? ?? '',
       status: $enumDecodeNullable(_$GameStatusEnumMap, json['status']) ??
           GameStatus.playing,
+      currentGameId: json['currentGameId'] as String?,
     );
 
 Map<String, dynamic> _$GameModelToJson(GameModel instance) => <String, dynamic>{
@@ -23,10 +24,12 @@ Map<String, dynamic> _$GameModelToJson(GameModel instance) => <String, dynamic>{
       'currentWord': instance.currentWord,
       'currentPlayerId': instance.currentPlayerId,
       'status': _$GameStatusEnumMap[instance.status]!,
+      'currentGameId': instance.currentGameId,
       'players': instance.players,
     };
 
 const _$GameStatusEnumMap = {
+  GameStatus.active: 'active',
   GameStatus.playing: 'playing',
   GameStatus.paused: 'paused',
   GameStatus.completed: 'completed',

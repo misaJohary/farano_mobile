@@ -39,12 +39,14 @@ class GameService {
         {
           'id': userId,
           'username': username,
-          'isReady': true,
+          'isReady': false,
+          'score': 0,
         },
         {
           'id': null,
           'username': null,
           'isReady': false,
+          'score': 0,
         }
       ],
       'gameHistory': [],
@@ -93,7 +95,7 @@ class GameService {
       String userId, String username, String matchCode) async {
     // Query for match with this code
     final snapshot = await _matchesRef
-        .where('matchCode', isEqualTo: matchCode)
+        .where('code', isEqualTo: matchCode)
         .where('status', isEqualTo: 'waiting')
         .limit(1)
         .get();
@@ -123,9 +125,10 @@ class GameService {
 
 // Update only player 2's data
     updatedPlayers[1] = {
-      'userId': userId,
+      'id': userId,
       'username': username,
-      'isReady': true,
+      'isReady': false,
+      'score': 0,
     };
 
 // Update the entire players array to ensure nothing is lost
@@ -136,7 +139,7 @@ class GameService {
     });
 
     // Create the first game for this match
-    final gameId = await _createNewGame(matchDoc.id, matchData['players']);
+    final gameId = await _createNewGame(matchDoc.id, updatedPlayers);
 
     // Update match with the new game
     await matchDoc.reference.update({
@@ -165,7 +168,7 @@ class GameService {
       'endedAt': null,
       'currentWord': '',
       'players': players,
-      'currentPlayerId': players[startingPlayerIndex]['userId'],
+      'currentPlayerId': players[startingPlayerIndex]['id'],
       'turnStartedAt': FieldValue.serverTimestamp(),
       'turns': [],
       'winner': null,

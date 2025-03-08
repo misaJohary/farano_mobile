@@ -1,14 +1,23 @@
+import 'package:farano/app.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../../../core/widgets/custom_text_field.dart';
 import '../../../../core/widgets/strok_text.dart';
 import '../../../../core/widgets/trapezed_painter.dart';
+import '../../manager/match/match_bloc.dart';
 
-class JoinGamePage extends StatelessWidget {
+class JoinGamePage extends StatefulWidget {
   const JoinGamePage({super.key});
 
+  @override
+  State<JoinGamePage> createState() => _JoinGamePageState();
+}
+
+class _JoinGamePageState extends State<JoinGamePage> {
+  final TextEditingController _controller = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,8 +57,9 @@ class JoinGamePage extends StatelessWidget {
                       const SizedBox(
                         height: 8,
                       ),
-                      const CustomTextField(
-                        decoration: InputDecoration(
+                      CustomTextField(
+                        controller: _controller,
+                        decoration: const InputDecoration(
                           hintText: 'Code de la partie',
                         ),
                       ),
@@ -59,7 +69,15 @@ class JoinGamePage extends StatelessWidget {
                       SizedBox(
                         width: 105,
                         child: ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            final code = _controller.text;
+                            print(code);
+                            if(code.isNotEmpty) {
+                              context
+                                  .read<MatchBloc>()
+                                  .add(MatchJoined(_controller.text));
+                            }
+                          },
                           child: const StrokeText(text: 'Valider'),
                         ),
                       ),

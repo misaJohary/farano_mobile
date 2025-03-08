@@ -5,19 +5,13 @@ import 'package:farano/game/domain/entities/match_entity.dart';
 import 'package:farano/game/domain/repositories/match_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../core/status.dart';
 import '../../../data/models/match_model.dart';
 import '../../../domain/entities/player_entity.dart';
 
 part 'match_event.dart';
 
 part 'match_state.dart';
-
-enum Status {
-  init,
-  loading,
-  succeed,
-  failed,
-}
 
 class MatchBloc extends Bloc<MatchEvent, MatchState> {
   final MatchRepository repo;
@@ -54,13 +48,15 @@ class MatchBloc extends Bloc<MatchEvent, MatchState> {
     emit(state.copyWith(status: Status.loading));
     final result = await repo.joinMatch(PlayerEntity.second(), event.code);
     if (result.isSuccess) {
+      print('success');
       emit(
         state.copyWith(
-          status: Status.loading,
+          status: Status.succeed,
           currentGame: result.getSuccess,
         ),
       );
     } else {
+      print('error');
       emit(
         state.copyWith(
           status: Status.failed,

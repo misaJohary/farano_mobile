@@ -13,6 +13,7 @@ class GameModel extends GameEntity {
     this.players =const [],
     super.currentPlayerId,
     super.status,
+    super.currentGameId,
   });
 
   @override

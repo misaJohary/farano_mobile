@@ -6,11 +6,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../../../core/services/game_service.dart';
+import '../../../../core/status.dart';
 import '../../../../core/utils/log.dart';
 import '../../../../core/widgets/custom_text_field.dart';
 import '../../../../core/widgets/strok_text.dart';
 import '../../../../core/widgets/trapezed_painter.dart';
 import '../../../domain/entities/match_entity.dart';
+import '../../manager/game/game_bloc.dart';
 import '../../manager/match/match_bloc.dart';
 import '../game/game_page.dart';
 
@@ -83,6 +85,7 @@ class _LaunchNewGamePageState extends State<LaunchNewGamePage> {
                 ),
               );
             } else if (state.match?.status == MatchStatus.gameCreated) {
+              context.read<GameBloc>().add(GameUpdated(gameId: state.match!.currentGameId));
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => const GamePage()),
@@ -175,8 +178,8 @@ class _LaunchNewGamePageState extends State<LaunchNewGamePage> {
                                         child: ElevatedButton(
                                           onPressed: () {
                                             Clipboard.setData(
-                                                    const ClipboardData(
-                                                        text: "Your Copy text"))
+                                                ClipboardData(
+                                                        text: state.match!.code))
                                                 .then((_) {
                                               if (!context.mounted) return;
                                               ScaffoldMessenger.of(context)

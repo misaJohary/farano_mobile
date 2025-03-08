@@ -4,6 +4,7 @@ import 'package:injectable/injectable.dart';
 
 import '../../../core/services/game_service.dart';
 import '../../../core/utils/failure.dart';
+import '../../../core/utils/log.dart';
 import '../../../core/utils/multi_result.dart';
 import '../../domain/entities/game_config_entity.dart';
 import '../../domain/entities/match_entity.dart';
@@ -50,9 +51,11 @@ class MatchRepositoryImpl implements MatchRepository {
         player.username,
         code,
       );
+      Log.info(game);
 
       return ResultSuccess(GameModel.fromJson(game));
     } catch (_) {
+      Log.info(_);
       return ResultError(const ServerFailure('Failed to create game'));
     }
   }

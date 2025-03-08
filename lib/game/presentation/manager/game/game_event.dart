@@ -8,10 +8,10 @@ class GameUpdated extends GameEvent {
   final GameEntity? game;
   final String? gameId;
 
-  const GameUpdated(
+  const GameUpdated({
     this.game,
     this.gameId,
-  );
+  });
 
   @override
   List<Object?> get props => [
